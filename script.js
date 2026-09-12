@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 targetSection.classList.add('active');
             }
 
+            button.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+
             if (window.MathJax && window.MathJax.typesetPromise) {
                 window.MathJax.typesetPromise();
             }
