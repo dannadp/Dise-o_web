@@ -4,36 +4,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const targetUnitId = button.getAttribute('data-unit');
+            const targetUnit = button.getAttribute('data-unit');
 
             navButtons.forEach(btn => btn.classList.remove('active'));
-            unitSections.forEach(section => section.classList.remove('active'));
-
             button.classList.add('active');
-            
-            const targetSection = document.getElementById(targetUnitId);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
 
-            button.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            unitSections.forEach(section => {
+                if (section.id === targetUnit) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
 
             if (window.MathJax && window.MathJax.typesetPromise) {
-                window.MathJax.typesetPromise();
+                MathJax.typesetPromise();
+            }
+
+            if (window.innerWidth <= 900) {
+                document.querySelector('.content-area').scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
 
-    const headerNavLinks = document.querySelectorAll('.nav-links a, .hero-actions a');
-    headerNavLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const href = link.getAttribute('href');
-            if (href.startsWith('#')) {
-                const targetElement = document.querySelector(href);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
+    const topNavItems = document.querySelectorAll('.navbar .nav-item');
+    topNavItems.forEach(item => {
+        item.addEventListener('click', () => {
+            topNavItems.forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
         });
     });
 });
